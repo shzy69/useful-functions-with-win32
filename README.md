@@ -6,15 +6,15 @@ So, I write this header, and I will be continued to updated this file.
 
 # Current Function
 
-### SetWin32Clipboard
+## SetWin32Clipboard
 Add some texts to the Clipboard.  
 
-### GetCurProcessTopLevelWindow
+## GetCurProcessTopLevelWindow
 Get the TopLevel Window's HWND (handle) of current process.  
 
-### SetWindowIcon
+## SetWindowIcon
 Set win32 window icon, appear in window title, and Task view (Alt + Tab).  
 
-### OpenExplorer
+## OpenExplorer
 Open file explorer on a given path.  
 
