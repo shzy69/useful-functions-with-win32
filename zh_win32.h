@@ -122,3 +122,21 @@ inline void OpenExplorer(std::string path) //shoule be ANSI coded
 }
 
 
+//Alloc console window with quick edit mode disable
+inline void AllocConsoleWindow()
+{
+	AllocConsole();
+	freopen("CONIN$", "r", stdin);
+	freopen("CONOUT$", "w", stdout);
+	freopen("CONOUT$", "w", stderr);
+
+	//disable Quick Edit mode
+	HANDLE h_input = GetStdHandle(STD_INPUT_HANDLE);
+	DWORD mode = 0;
+	GetConsoleMode(h_input, &mode);
+	mode &= (~(DWORD)ENABLE_QUICK_EDIT_MODE);
+	mode |= ENABLE_EXTENDED_FLAGS;
+	SetConsoleMode(h_input, mode);
+}
+
+

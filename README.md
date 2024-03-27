@@ -18,3 +18,7 @@ Set win32 window icon, appear in window title, and Task view (Alt + Tab).
 ## OpenExplorer
 Open file explorer on a given path.  
 
+## AllocConsoleWindow
+Alloc a console window with quick edit mode disable.  
+If the quick edit mode is on, mouse click in the console window will block the application.
+
