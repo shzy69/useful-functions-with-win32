@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <signal.h>
 #include <string>
 #include <vector>
 
@@ -138,5 +139,43 @@ inline void AllocConsoleWindow()
 	mode |= ENABLE_EXTENDED_FLAGS;
 	SetConsoleMode(h_input, mode);
 }
+
+
+
+namespace sig_used
+{
+volatile sig_atomic_t global_sig_running_process = 1;
+volatile sig_atomic_t global_sig_one_shot = 0;
+void sig_INT_handler(int sig)
+{
+	switch (sig)
+	{
+	case SIGINT:
+		global_sig_running_process = 0;
+		if (global_sig_one_shot)
+			signal(sig, SIG_DFL);
+		else
+			signal(sig, sig_INT_handler);
+		break;
+	default:
+		break;
+	}
+}
+}
+
+/* Wait for Ctrl+C, the interrupt signal. */
+/* Register the INTERRUPT signal */
+inline void reg_INT_signal(bool one_shot = false)
+{
+	sig_used::global_sig_one_shot = one_shot;
+	signal(SIGINT, sig_used::sig_INT_handler);
+}
+/* Wait the INTERRUPT signal */
+inline void wait_INT_signal()
+{
+	while (sig_used::global_sig_running_process) std::this_thread::yield();
+}
+
+
 
 
